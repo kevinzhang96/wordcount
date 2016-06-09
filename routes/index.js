@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var randomstring = require('randomstring');
 var nodemailer = require("nodemailer");
+var csv_string = require("csv-string");
 
 var smtpTransport = nodemailer.createTransport("SMTP",{
    service: "Gmail",
@@ -31,13 +32,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/send', function(req, res) {
-	var email = request.body.email;
-	var text = request.body.text;
+	var user = request.body.user;
+	var data = request.body.data;
 	smtpTransport.sendMail({
 		from: "Garage Wordcount <garagewordcount@gmail.com>",
-		to: email,
+		to: "Patrick Pan <patrick.pan@patrickpan.com>",
 		subject: "Today's Statistics",
-		text: text
+		text: htmlTemplate(user, data)
 	}, function(error, response){
 		if(error) {
 			console.log(error);
@@ -54,3 +55,22 @@ router.get('/send', function(req, res) {
 });
 
 module.exports = router;
+
+var htmlTemplate = function(user, data) {
+	var generateRow = function(key, value) {
+		return "<tr><th class='tg-yw4l'>" + key + "</th><th class='tg-yw4l'>" + value + "</th></tr>\n";
+	}
+	data = data.split("\n")[1].split(',');
+	return '<style type="text/css">\n' + 
+	'.tg  {border-collapse:collapse;border-spacing:0;}\n' + 
+	'.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}\n' + 
+	'.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}\n' + 
+	'.tg .tg-yw4l{vertical-align:top}\n' + 
+	'</style>\n' + 
+	'<table class="tg">\n' +
+  	generateRow("start", data[0]) + 
+	generateRow("filename", data[1]) +
+	generateRow("keystrokes", data[2]) + 
+	generateRow("length", data[3]) + 
+	'</table>\n';
+}
