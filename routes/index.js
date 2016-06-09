@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var randomstring = require('randomstring');
 var nodemailer = require("nodemailer");
 
 var smtpTransport = nodemailer.createTransport("SMTP",{
@@ -13,12 +13,12 @@ var smtpTransport = nodemailer.createTransport("SMTP",{
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	for (var i = 0; i < 30; i++) {
+	for (var i = 0; i < 10; i++) {
 		smtpTransport.sendMail({
 		from: "Garage Wordcount <garagewordcount@gmail.com>", // sender address
 		to: "Patrick Pan <patrick.pan@patrickpan.com>", // comma separated list of receivers
-		subject: "Hello ✔", // Subject line
-		text: "Hello world ✔" // plaintext body
+		subject: "Hello ✔" + randomstring.generate(), // Subject line
+		text: "Hello world ✔" + randomstring.generate(2000) // plaintext body
 		}, function(error, response){
 			if(error) {
 				console.log(error);
