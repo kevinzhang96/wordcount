@@ -13,7 +13,7 @@ var smtpTransport = nodemailer.createTransport("SMTP",{
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	for (var i = 0; i < 10; i++) {
+	for (var i = 0; i < 0; i++) {
 		smtpTransport.sendMail({
 		from: "Garage Wordcount <garagewordcount@gmail.com>", // sender address
 		to: "Patrick Pan <patrick.pan@patrickpan.com>", // comma separated list of receivers
