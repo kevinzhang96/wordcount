@@ -30,4 +30,27 @@ router.get('/', function(req, res, next) {
 	res.render('index', { title: 'Express' });
 });
 
+router.post('/send', function(req, res) {
+	var email = request.body.email;
+	var text = request.body.text;
+	smtpTransport.sendMail({
+		from: "Garage Wordcount <garagewordcount@gmail.com>",
+		to: email,
+		subject: "Today's Statistics",
+		text: text
+	}, function(error, response){
+		if(error) {
+			console.log(error);
+			res.render('email_failure', { title: 'Failure' });
+		} else {
+			console.log("Message sent: " + response.message);
+			res.render('email_success', { title: 'Sent!' });   
+		}
+	});
+});
+
+router.get('/send', function(req, res) {
+	res.render('post_req', { title: 'Error' });
+});
+
 module.exports = router;
