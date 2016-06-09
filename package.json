@@ -17,6 +17,7 @@
   "devDependencies": {
     "nodemailer": "~0.7.1",
     "randomstring": "~1.1.5",
-    "body-parser": "~1.13.3"
+    "body-parser": "~1.13.3",
+    "csv": "~1.1.0"
   }
 }
