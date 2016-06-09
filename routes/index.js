@@ -25,12 +25,6 @@ router.get('/', function(req, res, next) {
         console.log("Message sent: " + response.message);
     }
   });
-  smtpTransport.sendMail({
-   from: "Garage Wordcount <garagewordcount@gmail.com>", // sender address
-   to: "Kevin Zhang <kevin.zhang500@gmail.com>", // comma separated list of receivers
-   subject: "Hello ✔", // Subject line
-   text: "Hello world ✔" // plaintext body
-  });
   res.render('index', { title: 'Express' });
 });
 
